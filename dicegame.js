@@ -6,18 +6,22 @@
 //get player total for round two
 //Last round- roll 6 and 4 sided dice.
 //get player total for round three
-//Roll a "one" on each of the dice during any of the three rounds and it's an automatic WIN.
+//Roll a "one" on the two dice during any of the three rounds and it's an automatic WIN.
+//Roll a "five" on the two dice during any of the three rounds and you can steal the other players points.
 
 
 function gameLogic(sides,amount) { ///master function 
 	let runDiceGame;
 	let playerOne= getUserInput("Please enter player name!");
-	// let playerTwo= getUserInput("Please enter player name!");
+	let playerTwo= getUserInput("Please enter player name!");
 	let playerOneScore=0;
 	playerOneScore = roundOne(playerOneScore);
 	playerOneScore = roundTwo(playerOneScore);
 	playerOneScore = roundThree(playerOneScore);
-	
+	playerTwoScore = roundOne(playerTwoScore);
+	playerTwoScore = roundTwo(playerTwoScore);
+	playerTwoScore = roundThree(playerThreeScore);
+
 
 }
 
@@ -29,9 +33,12 @@ function roundOne(playerScore){
 	if(didWinInstantly === true) {
 		return;
 	}
-	// if not an instant win, add to playerOne score
-
-	playerScore=updatePlayerScore(playerScore,dice20,dice12);
+	// if not an instant win or loss, add to playerOne score
+	let didStealPoints = checkForPointLoss(dice20,dice12)
+	if(didStealPoints === true) {
+		return;
+	}
+	playerScore=updatePlayerScore(playerScore,playerOneScore,playerTwoScore,dice20,dice12);
 	return playerScore;
 
 }
@@ -44,8 +51,12 @@ function roundTwo(playerScore){
 	if(didWinInstantly === true){
 		return;
 	}
+	let didStealPoints = checkForPointLoss(dice10,dice8)
+	if(didStealPoints === true) {
+		return;
+	}
 
-	playerScore=updatePlayerScore(playerScore,dice10,dice8);
+	playerScore=updatePlayerScore(playerScore,playerOneScore,playerTwoScore,dice10,dice8);
 	return playerScore;
 }
 
@@ -57,26 +68,30 @@ function roundThree(playerScore){
 	if(didWinInstantly === true){
 		return;
 	}
+	let didStealPoints = checkForPointLoss(dice6,dice4)
+	if(didStealPoints === true) {
+		return;
+	}
 
-	playerScore=updatePlayerScore(playerScore,dice6,dice4);
+	playerScore=updatePlayerScore(playerScore,playerOneScore,playerTwoScore,dice6,dice4);
 	return playerScore;
 }
 
-function displayFinalTotalScore(currentScore) {
+function displayFinalTotalScore(currentScore){
 	let finalScore=currentScore;
 	console.log(finalScore);
 }
 
 
 
-function updatePlayerScore(currentScore, roll1, roll2) {
+function updatePlayerScore(currentScore, roll1, roll2){
 	let newScore=currentScore+roll1+roll2;
 	console.log(newScore)	
 	return newScore;
 
 }
 
-function checkForInstantWin(roll1, roll2) {
+function checkForInstantWin(roll1, roll2){
 	if(roll1 === 1 && roll2 === 1){
 		console.log("Automatic Win!");
 		return true;
@@ -85,7 +100,18 @@ function checkForInstantWin(roll1, roll2) {
 	}
 }
 
-function getUserInput(question) {
+//Both dice rolled a 5- check to steal the other player's points/false
+function checkForPointLoss(roll1,roll2){
+	if(roll1 ===5 && roll2 ===5){
+		console.log("Automatic Loss!");
+		return true;
+	} else {
+			return false;
+	}
+}
+
+
+function getUserInput(question){
 	let userInput = prompt(question);
 	return userInput;
 }

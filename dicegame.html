@@ -2,9 +2,6 @@
 <html>
 <body>
 
-<script src=""></script>
-<script type=""></script>
-
 	<title>Dice Game</title>
 	<h1>Dice Game!</h1>
 <br>
@@ -13,23 +10,29 @@
 <p><strong>Round Two:</strong> Roll the 10 and the 8 sided dice.</p>
 <p><strong>Final Round:</strong> Roll the 6 and the 4 sided die.</p>
 <p>Roll a "one" on <strong>Both</strong> dice during any of the three rounds and it's an automatic <strong>WIN!</strong></p>
+<p>Roll a "five" on <strong>Both</strong> dice during any of the three rounds and you can <strong>STEAL</strong> the other players points!</p>
 <br>
 <p> Enter names in Player One and Player Two fields, then click "Submit" to submit form:</p>
-<form id="frm1" action="/action_page.php">
+
+<form id="frm1" action="/submit.php" onsubmit="return playerOne()" method="post">
 	Player One: <input type="text" name= "playerone"><br>
 	Player Two: <input type="text" name= "playertwo"><br><br>
-	<input type="button" onclick="myFunctions()" value="Submit">
+	<button onclick="runTheGame()">Submit</button>
+	<br>
 </form>
+
 <br>
 
-<input type="button" value="Roll The Dice" onclick="rollDice()"/>
 
+<button onclick="rollTheDice()">Roll The Dice</button>
 
 </head>
 <body>
 
 
 <script src="dicegame.js"></script>
+	
+
 
 </body>
 </html>
