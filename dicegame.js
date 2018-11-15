@@ -9,15 +9,20 @@
 //Roll a "one" on each of the dice during any of the three rounds and it's an automatic WIN.
 
 
-function gameLogic(sides,amount) { ///masterfunction 
+function gameLogic(sides,amount) { ///master function 
 	let runDiceGame;
 	let playerOne= getUserInput("Please enter player name!");
 	// let playerTwo= getUserInput("Please enter player name!");
 	let playerOneScore=0;
+	playerOneScore = roundOne(playerOneScore);
+	playerOneScore = roundTwo(playerOneScore);
+	playerOneScore = roundThree(playerOneScore);
+	
 
+}
 
 	////////// ONE ROUND /////////////
-function roundOne(){
+function roundOne(playerScore){
 	let dice20= rollDice(20);
 	let dice12= rollDice(12);
 	let didWinInstantly = checkForInstantWin(dice20, dice12)
@@ -26,11 +31,13 @@ function roundOne(){
 	}
 	// if not an instant win, add to playerOne score
 
-	playerOneScore=updatePlayerScore(playerOneScore,dice20,dice12);
+	playerScore=updatePlayerScore(playerScore,dice20,dice12);
+	return playerScore;
 
+}
 	//////////////////////////////////
 
-function roundTwo(){
+function roundTwo(playerScore){
 	let dice10= rollDice(10);
 	let dice8= rollDice(8);
 	let didWinInstantly = checkForInstantWin(dice10, dice8);
@@ -38,11 +45,12 @@ function roundTwo(){
 		return;
 	}
 
-	playerOneScore=updatePlayerScore(playerOneScore,dice10,dice8);
-
+	playerScore=updatePlayerScore(playerScore,dice10,dice8);
+	return playerScore;
+}
 
  //////////////////
-function roundThree(){
+function roundThree(playerScore){
 	let dice6= rollDice(6);
 	let dice4= rollDice(4);
 	let didWinInstantly = checkForInstantWin(dice6, dice4);
@@ -50,32 +58,37 @@ function roundThree(){
 		return;
 	}
 
-	playerOneScore=updatePlayerScore(playerOneScore,dice6,dice4);
-	
+	playerScore=updatePlayerScore(playerScore,dice6,dice4);
+	return playerScore;
 }
 
-function finalTotalScore(){
-
-
-
+function displayFinalTotalScore(currentScore) {
+	let finalScore=currentScore;
+	console.log(finalScore);
 }
+
+
 
 function updatePlayerScore(currentScore, roll1, roll2) {
 	let newScore=currentScore+roll1+roll2;
+	console.log(newScore)	
 	return newScore;
-}
-console.log("newScore")	
 
+}
 
 function checkForInstantWin(roll1, roll2) {
 	if(roll1 === 1 && roll2 === 1){
 		console.log("Automatic Win!");
 		return true;
 	} else {
-		return false;
+			return false;
 	}
+}
 
-
+function getUserInput(question) {
+	let userInput = prompt(question);
+	return userInput;
+}
 
 
 
